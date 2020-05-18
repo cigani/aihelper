@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aihelper"
-version = "0.1.4"
+version = "0.1.10"
 description = ""
 authors = ["mjaquier <mjaquier@me.com>"]
 
