@@ -46,7 +46,10 @@ def topic_directories(path) -> (list, list):
                     else:
                         directory_listing[t] = {isograd: {method: full_path_data}}
                     if method_listing.get(method):
-                        method_listing[method][isograd].extend(full_path_data)
+                        if method_listing[method].get(isograd):
+                            method_listing[method][isograd].extend(full_path_data)
+                        else:
+                            method_listing[method][isograd] = full_path_data
                     else:
                         method_listing[method] = {isograd: full_path_data}
 
@@ -56,16 +59,21 @@ def topic_directories(path) -> (list, list):
                         temperature_listing[isograd] = [temperature]
                 else:
                     # No temperature data provided in file structure (Old Style for Gradient Data)
+                    method = method.upper()
+                    isograd = temperature.lower()
                     if directory_listing.get(t):
-                        directory_listing[t][temperature] = {method: full_path_data}
+                        directory_listing[t][isograd] = {method: full_path_data}
                     else:
-                        directory_listing[t] = {temperature: {method: full_path_data}}
+                        directory_listing[t] = {isograd: {method: full_path_data}}
                     if method_listing.get(method):
-                        method_listing[method][temperature].extend(full_path_data)
+                        if method_listing[method].get(isograd):
+                            method_listing[method][isograd].extend(full_path_data)
+                        else:
+                            method_listing[method][isograd]= full_path_data
                     else:
-                        method_listing[method] = {temperature: full_path_data}
+                        method_listing[method] = {isograd: full_path_data}
 
-    for k, v in temperature_listing:
+    for k, v in temperature_listing.items():
         temperature_listing[k] = list(set(v))
     return directory_listing, method_listing, temperature_listing
 

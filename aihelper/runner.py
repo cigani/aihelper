@@ -1,4 +1,4 @@
-path = r'C:\Users\mjaquier\PycharmProjects\AIdirectory\tests\Project VERY NICE'
+path = r'C:\Users\mjaquier\PycharmProjects\aithermal\tests'
 
 import aihelper.aifile as afile
 
