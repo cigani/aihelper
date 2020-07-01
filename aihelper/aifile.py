@@ -1,7 +1,7 @@
 from collections import defaultdict
 import os
 import re
-
+from typing import Callable, Iterator, Union, Optional, List
 
 def topic_directories(path) -> (list, list):
     topics = [topic for topic in os.listdir(path) if re.search(r"^Topic", topic)]
@@ -21,18 +21,12 @@ def topic_directories(path) -> (list, list):
             if [
                 m
                 for m in f
-                if (
-                    os.path.splitext(m)[-1] == ".csv"
-                    or os.path.splitext(m)[-1] == ".txt"
-                )
+                if (os.path.splitext(m)[-1].endswith(('csv', 'txt')))
             ]:
                 data = [
                     m
                     for m in f
-                    if (
-                        os.path.splitext(m)[-1] == ".csv"
-                        or os.path.splitext(m)[-1] == ".txt"
-                    )
+                    if (os.path.splitext(m)[-1].endswith(('csv', 'txt')))
                 ]
                 full_path_data = [os.path.join(r, d) for d in data]
                 remaning_file, method = os.path.split(r)
@@ -133,3 +127,15 @@ def _construct_methods_listing(gradient, isotherms, methods):
                 method_dict["gradient"].append(f"{r}\\{t}\\{m}")
 
     return method_dict
+
+def scanner(path: list, ext: str = None) -> str:
+    for sub_path in path:
+        sub_path_files = os.listdir(sub_path)
+        if ext:
+            sub_path_files = [
+                os.path.join(sub_path, file)
+                for file in sub_path_files
+                if os.path.splitext(file)[-1].endswith(ext)
+            ]
+        for file in sub_path_files:
+            yield file
