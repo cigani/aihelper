@@ -3,6 +3,27 @@ import os
 import re
 from typing import Callable, Iterator, Union, Optional, List
 
+
+def activation_energy(path, ion):
+    gradient_and_ion = defaultdict()
+    for r, d, f in os.walk(path):
+        if [m for m in f if os.path.splitext(m)[-1] == ".txt"]:
+            data = [
+                m
+                for m in f
+                if (
+                    os.path.splitext(m)[-1] == ".csv"
+                    or os.path.splitext(m)[-1] == ".txt"
+                )
+            ]
+            full_path_data = [os.path.join(r, d) for d in data]
+            remaning_file, method = os.path.split(r)
+            remaning_file, temperature = os.path.split(remaning_file)
+            if str(ion) in list(map(lambda x: os.path.splitext(x)[0], f)):
+                gradient_and_ion[temperature] = full_path_data[0]
+    return gradient_and_ion
+
+
 def topic_directories(path) -> (list, list):
     topics = [topic for topic in os.listdir(path) if re.search(r"^Topic", topic)]
 
