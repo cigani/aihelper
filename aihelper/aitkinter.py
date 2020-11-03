@@ -102,3 +102,6 @@ class OkButton(Frame):
             parent, text="Ok", command=lambda: function(*args, **kwargs)
         ).pack(anchor=anchor, side=side)
         self.label = label
+
+def test():
+    pass
