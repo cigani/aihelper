@@ -1,5 +1,20 @@
-from tkinter import Toplevel, Label, Button, Frame, LEFT, W, Entry, TOP, X, RIGHT, YES, S, filedialog, Checkbutton, \
-    IntVar
+from tkinter import (
+    LEFT,
+    RIGHT,
+    TOP,
+    YES,
+    Button,
+    Checkbutton,
+    Entry,
+    Frame,
+    IntVar,
+    Label,
+    S,
+    Toplevel,
+    W,
+    X,
+    filedialog,
+)
 
 
 class Popup:
@@ -56,7 +71,16 @@ class EntryBar(Frame):
 
 
 class Browse(Frame):
-    def __init__(self, parent=None, label=None, type='file', title='', initial=r'\\', anchor=S, side=LEFT):
+    def __init__(
+        self,
+        parent=None,
+        label=None,
+        type="file",
+        title="",
+        initial=r"\\",
+        anchor=S,
+        side=LEFT,
+    ):
         Frame.__init__(self, parent)
         self.file = ""
         if not label:
@@ -64,22 +88,23 @@ class Browse(Frame):
         self.btn = Button(
             parent, text="Browse", command=lambda: self.browsefunc()
         ).pack(anchor=anchor, side=side)
-        self.struct = {'file': filedialog.askopenfiles,
-                       'dir': filedialog.askdirectory}
+        self.struct = {"file": filedialog.askopenfiles, "dir": filedialog.askdirectory}
         self.type = type
         self.title = title
         self.initial = initial
 
     def browsefunc(self):
-        if self.type == 'file':
-            mode = 'rb'
+        if self.type == "file":
+            mode = "rb"
         else:
             mode = None
-        self.file = self.struct[self.type](mode=mode, title=self.title, initialdir=self.initial)
-        if self.type == 'file':
+        self.file = self.struct[self.type](
+            mode=mode, title=self.title, initialdir=self.initial
+        )
+        if self.type == "file":
             self.label.config(text=self.file[0].name.split("/")[-1])
         else:
-            self.label.config(text=self.file.split('/')[-1])
+            self.label.config(text=self.file.split("/")[-1])
         self.label.pack()
 
     def get(self):
@@ -88,20 +113,21 @@ class Browse(Frame):
 
 class OkButton(Frame):
     def __init__(
-            self,
-            parent=None,
-            label=None,
-            anchor=S,
-            side=RIGHT,
-            function=None,
-            *args,
-            **kwargs,
+        self,
+        parent=None,
+        label=None,
+        anchor=S,
+        side=RIGHT,
+        function=None,
+        *args,
+        **kwargs,
     ):
         Frame.__init__(self, parent)
         self.ok = Button(
             parent, text="Ok", command=lambda: function(*args, **kwargs)
         ).pack(anchor=anchor, side=side)
         self.label = label
+
 
 def test():
     pass

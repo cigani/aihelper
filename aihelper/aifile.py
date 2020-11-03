@@ -1,7 +1,7 @@
-from collections import defaultdict
 import os
 import re
-from typing import Callable, Iterator, Union, Optional, List
+from collections import defaultdict
+from typing import Callable, Iterator, List, Optional, Union
 
 
 def activation_energy(path, ion):
@@ -39,15 +39,9 @@ def topic_directories(path) -> (list, list):
     for t, td in zip(topics, directories):
         for r, d, f in os.walk(td):
             # Datafile present
-            if [
-                m
-                for m in f
-                if (os.path.splitext(m)[-1].endswith(('csv', 'txt')))
-            ]:
+            if [m for m in f if (os.path.splitext(m)[-1].endswith(("csv", "txt")))]:
                 data = [
-                    m
-                    for m in f
-                    if (os.path.splitext(m)[-1].endswith(('csv', 'txt')))
+                    m for m in f if (os.path.splitext(m)[-1].endswith(("csv", "txt")))
                 ]
                 full_path_data = [os.path.join(r, d) for d in data]
                 remaning_file, method = os.path.split(r)
@@ -84,7 +78,7 @@ def topic_directories(path) -> (list, list):
                         if method_listing[method].get(isograd):
                             method_listing[method][isograd].extend(full_path_data)
                         else:
-                            method_listing[method][isograd]= full_path_data
+                            method_listing[method][isograd] = full_path_data
                     else:
                         method_listing[method] = {isograd: full_path_data}
 
@@ -148,6 +142,7 @@ def _construct_methods_listing(gradient, isotherms, methods):
                 method_dict["gradient"].append(f"{r}\\{t}\\{m}")
 
     return method_dict
+
 
 def scanner(path: list, ext: str = None) -> str:
     for sub_path in path:
